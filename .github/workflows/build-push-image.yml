@@ -51,4 +51,4 @@ jobs:
         run: docker ps
 
       - name: Check container
-        run: curl localhost:8080
+        run: curl --retry-delay 3 localhost:8080
