@@ -1,0 +1,6 @@
+services:
+  app:
+    container_name: simple-html
+    image: ghcr.io/gagahsyuja/test-img
+    ports:
+      - 8080:80
