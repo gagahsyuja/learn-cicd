@@ -1,0 +1,33 @@
+name: Build and Push Image
+
+run-name: Build and Push Image
+
+env:
+  IMAGE_TAG: ghcr.io/gagahsyuja/test-img:latest
+
+on:
+  - push
+jobs:
+  build-push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build --tag test-img .
+
+      - name: List image
+        run: docker image ls
+
+      - name: Check image
+        run: docker history test-img:latest
+
+      - name: Login to GitHub Container Registry
+        run: echo ${{ TOKEN_GITHUB }} | docker login ghcr.io --username gagahsyuja --password-stdin
+
+      - name: Tag image
+        run: docker tag test-img ${{ IMAGE_TAG }}
+
+      - name: Push image
+        run: docker push ${{ IMAGE_TAG }}
